@@ -10,8 +10,7 @@ const compat = new FlatCompat({
   baseDirectory: __dirname,
 });
 
-const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+export default [
   {
     plugins: {
       "simple-import-sort": simpleImportSort,
@@ -22,5 +21,3 @@ const eslintConfig = [
     },
   },
 ];
-
-export default eslintConfig;
