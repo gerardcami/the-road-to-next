@@ -11,8 +11,8 @@ const compat = new FlatCompat({
 });
 
 export default [
+  ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
-    extends: ["next/core-web-vitals", "next/typescript"],
     plugins: {
       "simple-import-sort": simpleImportSort,
     },
