@@ -1,9 +1,10 @@
 "use server";
 
-import { prisma } from "@/lib/prisma";
-import { ticketPath, ticketsPath } from "@/paths";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+
+import { prisma } from "@/lib/prisma";
+import { ticketPath, ticketsPath } from "@/paths";
 
 export const upsertTicket = async (
   id: string | undefined,
