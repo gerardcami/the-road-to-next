@@ -13,7 +13,7 @@ type TicketMoreMenuProps = {
   trigger: React.ReactElement;
 };
 
-const TicketMoreMenu = ({ ticket, trigger }: TicketMoreMenuProps) => {
+const TicketMoreMenu = ({ trigger }: TicketMoreMenuProps) => {
   const deleteButton = (
     <DropdownMenuItem>
       <LucideTrash className="size-4" />
