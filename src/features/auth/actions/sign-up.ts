@@ -70,10 +70,11 @@ export const signUp = async (_actionState: ActionState, formData: FormData) => {
     ) {
       return toActionState(
         "ERROR",
-        "Either email or username is already in use"
+        "Either email or username is already in use",
+        formData
       );
     } else {
-      return fromErrorToActionState(error);
+      return fromErrorToActionState(error, formData);
     }
   }
 
