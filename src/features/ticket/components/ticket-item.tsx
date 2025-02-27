@@ -4,7 +4,6 @@ import {
   LucideArrowUpRightFromSquare,
   LucideMoreVertical,
   LucidePencil,
-  LucideTrash,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -19,7 +18,6 @@ import {
 import { ticketEditPath, ticketPath } from "@/paths";
 import { toCurrencyFromCent } from "@/utils/currency";
 
-import { deleteTicket } from "../actions/delete-ticket";
 import { TICKET_ICONS } from "../constants";
 import { TicketMoreMenu } from "./ticket-more-menu";
 
@@ -52,14 +50,6 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
         <LucideArrowUpRightFromSquare className=" size-4" />
       </Link>
     </Button>
-  );
-
-  const deleteButton = (
-    <form action={deleteTicket.bind(null, ticket.id)}>
-      <Button variant="outline" size="icon">
-        <LucideTrash className="size-4" />
-      </Button>
-    </form>
   );
 
   const editButton = (
@@ -104,13 +94,12 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
           {isDetail ? (
             <>
               {editButton}
-              {deleteButton}
+              {moreMenu}
             </>
           ) : (
             <>
               {editButton}
               {detailButton}
-              {moreMenu}
             </>
           )}
         </div>
