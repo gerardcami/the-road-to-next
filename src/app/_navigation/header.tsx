@@ -4,12 +4,12 @@ import { LucideKanban } from "lucide-react";
 import Link from "next/link";
 
 import { ThemeSwitcher } from "@/components/theme/theme-switcher";
+import { buttonVariants } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import { useAuth } from "@/features/auth/hooks/use-auth";
 import { homePath, signInPath, signUpPath } from "@/paths";
 
 import { AccountDropdown } from "./account-dropdown";
-import { buttonVariants } from "./ui/button";
-import { Separator } from "./ui/separator";
 
 const Header = () => {
   const { user, isFetched } = useAuth();
