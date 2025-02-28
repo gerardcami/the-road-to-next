@@ -1,27 +1,25 @@
 "use client";
 
-import { LucideKanban, LucideLogOut } from "lucide-react";
+import { LucideKanban } from "lucide-react";
 import Link from "next/link";
 
 import { ThemeSwitcher } from "@/components/theme/theme-switcher";
-import { signOut } from "@/features/auth/actions/sign-out";
 import { useAuth } from "@/features/auth/hooks/use-auth";
 import { homePath, signInPath, signUpPath } from "@/paths";
 
-import { SubmitButton } from "./form/submit-button";
+import { AccountDropdown } from "./account-dropdown";
 import { buttonVariants } from "./ui/button";
+import { Separator } from "./ui/separator";
 
 const Header = () => {
-  const { user, isfetched } = useAuth();
+  const { user, isFetched } = useAuth();
 
-  if (!isfetched) {
+  if (!isFetched) {
     return null;
   }
 
   const navItems = user ? (
-    <form action={signOut}>
-      <SubmitButton label="Sign Out" icon={<LucideLogOut />} />
-    </form>
+    <AccountDropdown user={user} />
   ) : (
     <>
       <Link
@@ -53,8 +51,9 @@ const Header = () => {
         {/* </Button> */}
         {/* Second way to use shadcn components */}
       </div>
-      <div className="flex items-center gap-x-2">
+      <div className="flex items-center gap-x-4">
         <ThemeSwitcher />
+        <Separator orientation="vertical" />
         {navItems}
       </div>
     </nav>

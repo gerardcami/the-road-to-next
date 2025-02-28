@@ -6,7 +6,7 @@ import { getAuth } from "../queries/get-auth";
 
 const useAuth = () => {
   const [user, setUser] = useState<AuthUser | null>(null);
-  const [isfetched, setFetched] = useState(false);
+  const [isFetched, setFetched] = useState(false);
 
   const pathname = usePathname();
 
@@ -20,7 +20,7 @@ const useAuth = () => {
     fetchUser();
   }, [pathname]);
 
-  return { user, isfetched };
+  return { user, isFetched };
 };
 
 export { useAuth };
