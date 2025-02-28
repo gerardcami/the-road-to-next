@@ -6,8 +6,13 @@ import { Spinner } from "@/components/spinner";
 import { getAuth } from "@/features/auth/queries/get-auth";
 import { TicketList } from "@/features/ticket/components/ticket-list";
 import { TicketUpsertForm } from "@/features/ticket/components/ticket-upsert-form";
+import { SearchParams } from "@/features/ticket/search-params";
 
-const TicketsPage = async () => {
+type TicketsPageProps = {
+  searchParams: Promise<SearchParams>;
+};
+
+const TicketsPage = async ({ searchParams }: TicketsPageProps) => {
   const { user } = await getAuth();
   return (
     <div className="flex-1 flex flex-col gap-y-8">
@@ -25,7 +30,7 @@ const TicketsPage = async () => {
       <Suspense
         /* Temporal action while data is fetching */ fallback={<Spinner />}
       >
-        <TicketList userId={user?.id} />
+        <TicketList userId={user?.id} searchParams={await searchParams} />
       </Suspense>
       {/* </ErrorBoundary> */}
     </div>
