@@ -2,9 +2,13 @@ import { getTickets } from "../queries/get-tickets";
 /* import { getTickets } from "../queries/get-tickets"; */
 import { TicketItem } from "./ticket-item";
 
-const TicketList = async () => {
+type TicketListProps = {
+  userId?: string;
+};
+
+const TicketList = async ({ userId }: TicketListProps) => {
   /* const tickets = await getTickets(); */
-  const tickets = await getTickets();
+  const tickets = await getTickets(userId);
 
   return (
     <div className="flex-1 flex flex-col items-center gap-y-4 animate-fade-from-top">
