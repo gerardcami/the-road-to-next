@@ -18,6 +18,7 @@ import {
 import { getAuthOrRedirect } from "@/features/auth/queries/get-auth-or-redirect";
 import { isOwner } from "@/features/auth/utils/is-owner";
 import { Comments } from "@/features/comment/components/comments";
+import { CommentWithMetadata } from "@/features/comment/types";
 import { ticketEditPath, ticketPath } from "@/paths";
 import { toCurrencyFromCent } from "@/utils/currency";
 
@@ -37,9 +38,10 @@ type TicketItemProps = {
     | Awaited<ReturnType<typeof getTickets>>[number]
     | Awaited<ReturnType<typeof getTicket>>; */
   isDetail?: boolean;
+  comments?: CommentWithMetadata[];
 };
 
-const TicketItem = async ({ ticket, isDetail }: TicketItemProps) => {
+const TicketItem = async ({ ticket, isDetail, comments }: TicketItemProps) => {
   const { user } = await getAuthOrRedirect();
   const isTicketOwner = isOwner(user, ticket);
   if (!ticket) return null;
@@ -120,7 +122,7 @@ const TicketItem = async ({ ticket, isDetail }: TicketItemProps) => {
         </Card>
       </div>
 
-      {isDetail ? <Comments ticketId={ticket.id} /> : null}
+      {isDetail ? <Comments ticketId={ticket.id} comments={comments} /> : null}
     </div>
   );
 };
