@@ -1,4 +1,5 @@
-import { Prisma } from "@prisma/client";
+"use client";
+
 import clsx from "clsx";
 import {
   LucideArrowUpRightFromSquare,
@@ -15,24 +16,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { getAuthOrRedirect } from "@/features/auth/queries/get-auth-or-redirect";
-import { isOwner } from "@/features/auth/utils/is-owner";
 import { Comments } from "@/features/comment/components/comments";
 import { CommentWithMetadata } from "@/features/comment/types";
 import { ticketEditPath, ticketPath } from "@/paths";
 import { toCurrencyFromCent } from "@/utils/currency";
 
 import { TICKET_ICONS } from "../constants";
+import { TicketWithMetadata } from "../types";
 import { TicketMoreMenu } from "./ticket-more-menu";
 
 type TicketItemProps = {
-  ticket: Prisma.TicketGetPayload<{
-    include: {
-      user: {
-        select: { username: true };
-      };
-    };
-  }>;
+  ticket: TicketWithMetadata;
   /* Use interferred types from the API */
   /* ticket:
     | Awaited<ReturnType<typeof getTickets>>[number]
@@ -41,22 +35,7 @@ type TicketItemProps = {
   comments?: CommentWithMetadata[];
 };
 
-const TicketItem = async ({ ticket, isDetail, comments }: TicketItemProps) => {
-  const { user } = await getAuthOrRedirect();
-  const isTicketOwner = isOwner(user, ticket);
-  if (!ticket) return null;
-
-  const moreMenu = isTicketOwner ? (
-    <TicketMoreMenu
-      ticket={ticket}
-      trigger={
-        <Button variant="outline" size="icon">
-          <LucideMoreVertical className="size-4" />
-        </Button>
-      }
-    />
-  ) : null;
-
+const TicketItem = ({ ticket, isDetail, comments }: TicketItemProps) => {
   const detailButton = (
     <Button variant="outline" size="icon" asChild>
       <Link prefetch href={ticketPath(ticket.id)}>
@@ -65,12 +44,23 @@ const TicketItem = async ({ ticket, isDetail, comments }: TicketItemProps) => {
     </Button>
   );
 
-  const editButton = isTicketOwner ? (
+  const editButton = ticket ? (
     <Button variant="outline" size="icon" asChild>
       <Link prefetch href={ticketEditPath(ticket.id)}>
         <LucidePencil className="size-4" />
       </Link>
     </Button>
+  ) : null;
+
+  const moreMenu = ticket.isOwner ? (
+    <TicketMoreMenu
+      ticket={ticket}
+      trigger={
+        <Button variant="outline" size="icon">
+          <LucideMoreVertical className="size-4" />
+        </Button>
+      }
+    />
   ) : null;
 
   return (
